@@ -6,6 +6,77 @@
   <title>Silly — Coming Soon</title>
   <meta name="description" content="Silly is launching soon. Join the list for early access, drops, and updates." />
   <style>
+    .countdown {
+  border: 3px solid var(--ink);
+  border-radius: 24px;
+  background: rgba(255,255,255,0.54);
+  padding: 18px;
+  box-shadow: 0 8px 0 rgba(0,0,0,0.08);
+  margin: 0 0 18px;
+}
+
+.countdown-title {
+  margin: 0 0 10px;
+  font-size: 1rem;
+  font-weight: 900;
+}
+
+.countdown-copy {
+  margin: 0 0 14px;
+  font-size: 0.95rem;
+  opacity: 0.9;
+  line-height: 1.5;
+  font-weight: 700;
+}
+
+.countdown-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.countdown-item {
+  border: 3px solid var(--ink);
+  border-radius: 18px;
+  background: #fffdfa;
+  padding: 14px 10px;
+  text-align: center;
+  box-shadow: 0 6px 0 rgba(0,0,0,0.08);
+}
+
+.countdown-num {
+  display: block;
+  font-size: clamp(1.5rem, 4vw, 2.2rem);
+  font-weight: 900;
+  line-height: 1;
+  margin-bottom: 6px;
+}
+
+.countdown-label {
+  display: block;
+  font-size: 0.78rem;
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  opacity: 0.72;
+}
+
+.countdown-ended {
+  font-size: 1rem;
+  font-weight: 900;
+}
+    .urgency {
+  margin: 14px 0 0;
+  font-size: 1rem;
+  font-weight: 900;
+  line-height: 1.35;
+}
+
+@media (max-width: 640px) {
+  .countdown-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
     :root {
       --bg: #f4b233;
       --bg-deep: #e7a21f;
@@ -459,9 +530,34 @@
           <div class="eyebrow">Launching soon</div>
           <h1><span class="brand">Silly</span><br />is on the way.</h1>
           <p class="sub">
-            A playful new world of style, personality, and performance is coming soon.
-            We’re building something bold, clean, and impossible to ignore.
+            A powerful new era of strength, discipline, and transformation is coming soon.
+            We’re building a fitness program that’s bold, focused, and impossible to ignore.
+
           </p>
+          <div class="countdown" aria-label="Launch countdown">
+  <p class="countdown-title">Countdown to launch</p>
+  <p class="countdown-copy">We’re counting down to the next big drop.</p>
+
+  <div class="countdown-grid" id="countdown">
+    <div class="countdown-item">
+      <span class="countdown-num" id="days">00</span>
+      <span class="countdown-label">Days</span>
+    </div>
+    <div class="countdown-item">
+      <span class="countdown-num" id="hours">00</span>
+      <span class="countdown-label">Hours</span>
+    </div>
+    <div class="countdown-item">
+      <span class="countdown-num" id="minutes">00</span>
+      <span class="countdown-label">Minutes</span>
+    </div>
+    <div class="countdown-item">
+      <span class="countdown-num" id="seconds">00</span>
+      <span class="countdown-label">Seconds</span>
+    </div>
+  </div>
+      <p class="urgency">Limited early access — don’t miss the drop.</p>
+</div>
 
           <div class="form-card">
             <p class="form-title">Get first access</p>
@@ -483,12 +579,6 @@
           <div class="cta-row">
             <a class="btn alt" href="mailto:hello@sillyperformance.com?subject=Collab%20Inquiry">Contact</a>
             <a class="btn alt" href="https://instagram.com/" target="_blank" rel="noopener noreferrer">Follow on Instagram</a>
-          </div>
-
-          <div class="pills">
-            <div class="pill">Streetwear energy</div>
-            <div class="pill">Performance mindset</div>
-            <div class="pill">Quiet confidence</div>
           </div>
         </div>
 
@@ -529,26 +619,52 @@
     </main>
   </div>
 
-  <script>
-    const form = document.getElementById('waitlist-form');
-    form.addEventListener('submit', function (event) {
-      event.preventDefault();
-      const email = document.getElementById('email').value.trim();
-      if (!email) return;
-      const subject = encodeURIComponent('Launch updates request');
-      const body = encodeURIComponent(
-        'Please add me to the Silly launch list.\n\nEmail: ' + email
-      );
-      window.location.href = 'mailto:hello@sillyperformance.com?subject=' + subject + '&body=' + body;
-    });
+<script>
+  const form = document.getElementById('waitlist-form');
+  form.addEventListener('submit', function (event) {
+    event.preventDefault();
+    const email = document.getElementById('email').value.trim();
+    if (!email) return;
 
-    /*
-      Optional future upgrades:
-      1) Replace the mailto form with a real endpoint:
-         <form action="https://formspree.io/f/your-id" method="POST">
-      2) Paste GoDaddy Conversations, TrustedSite, or analytics scripts here,
-         right before </body>.
-    */
-  </script>
+    const subject = encodeURIComponent('Launch updates request');
+    const body = encodeURIComponent(
+      'Please add me to the Silly launch list.\n\nEmail: ' + email
+    );
+
+    window.location.href =
+      'mailto:hello@sillyperformance.com?subject=' + subject + '&body=' + body;
+  });
+
+  const launchDate = new Date('2026-05-31T23:59:59');
+
+  const countdown = document.getElementById('countdown');
+  const daysEl = document.getElementById('days');
+  const hoursEl = document.getElementById('hours');
+  const minutesEl = document.getElementById('minutes');
+  const secondsEl = document.getElementById('seconds');
+console.log('countdown running', launchDate);
+  function updateCountdown() {
+    const now = new Date();
+    const diff = launchDate.getTime() - now.getTime();
+
+    if (diff <= 0) {
+      countdown.innerHTML = '<div class="countdown-ended">We’re live.</div>';
+      return;
+    }
+
+    const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+    const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
+    const minutes = Math.floor((diff / (1000 * 60)) % 60);
+    const seconds = Math.floor((diff / 1000) % 60);
+
+    daysEl.textContent = String(days).padStart(2, '0');
+    hoursEl.textContent = String(hours).padStart(2, '0');
+    minutesEl.textContent = String(minutes).padStart(2, '0');
+    secondsEl.textContent = String(seconds).padStart(2, '0');
+  }
+
+  updateCountdown();
+  setInterval(updateCountdown, 1000);
+</script>
 </body>
 </html>
