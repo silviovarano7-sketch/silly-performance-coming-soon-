@@ -15,7 +15,37 @@
   <title>Silly — Coming Soon</title>
   <meta name="description" content="Silly is launching soon. Join the list for early access, drops, and updates." />
   <style>
-    html, body {
+.mobile-signup {
+  display: none;
+}
+
+@media (max-width: 640px) {
+  .mobile-signup {
+    display: block;
+    border-top: 4px solid var(--ink);
+    padding: 22px 20px 24px;
+    background: rgba(255,255,255,0.22);
+  }
+
+  .mobile-signup-title {
+    margin: 0 0 8px;
+    font-size: 1.1rem;
+    font-weight: 900;
+  }
+
+  .mobile-signup-copy {
+    margin: 0 0 14px;
+    font-size: 0.95rem;
+    font-weight: 700;
+    opacity: 0.9;
+  }
+
+  .mobile-success {
+    margin-top: 12px;
+    font-weight: 900;
+  }
+}
+ html, body {
   height: 100%;
 }
 
@@ -639,18 +669,26 @@ body {
       </section>
 
       <section class="stats" aria-label="Launch highlights">
-        <div class="stat">
-          <span class="stat-num">Built for launch</span>
-          <div class="stat-label">Single file with the logo embedded, so the image will not break.</div>
-        </div>
-        <div class="stat">
-          <span class="stat-num">Lead-ready</span>
-          <div class="stat-label">Email capture UI included. Easy to connect to Formspark, Formspree, or GoDaddy later.</div>
-        </div>
-        <div class="stat">
-          <span class="stat-num">Widget-friendly</span>
-          <div class="stat-label">You can still add chat, TrustedSite, and analytics scripts before the closing body tag.</div>
-        </div>
+        <div class="mobile-signup">
+  <p class="mobile-signup-title">Don’t miss the drop</p>
+  <p class="mobile-signup-copy">Join the waitlist for early access.</p>
+
+  <form id="waitlist-form-mobile" action="https://formspree.io/f/mlgonagb" method="POST">
+    <div class="form-row">
+      <input
+        type="email"
+        name="email"
+        placeholder="Enter your email"
+        required
+      />
+      <button class="btn primary" type="submit">Get early access</button>
+    </div>
+
+    <input type="hidden" name="_subject" value="New Waitlist Signup" />
+    <p class="micro">Join 100+ others waiting for the drop.</p>
+    <p class="mobile-success" style="display:none;">You're in 🔥</p>
+  </form>
+</div>
       </section>
 
       <footer class="footer">
@@ -727,6 +765,40 @@ console.log('countdown running', launchDate);
 
   updateCountdown();
   setInterval(updateCountdown, 1000);
+  const mobileForm = document.getElementById('waitlist-form-mobile');
+  const mobileSuccess = document.querySelector('.mobile-success');
+
+  if (mobileForm) {
+    mobileForm.addEventListener('submit', async function (e) {
+      e.preventDefault();
+
+      const formData = new FormData(mobileForm);
+
+      try {
+        const response = await fetch(mobileForm.action, {
+          method: 'POST',
+          body: formData,
+          headers: {
+            Accept: 'application/json'
+          }
+        });
+
+        if (response.ok) {
+          mobileForm.reset();
+          mobileSuccess.style.display = 'block';
+
+          gtag('event', 'waitlist_signup', {
+            event_category: 'engagement',
+            event_label: 'mobile_email_signup'
+          });
+        } else {
+          alert('Something went wrong. Try again.');
+        }
+      } catch (error) {
+        alert('Network error. Try again.');
+      }
+    });
+  }
 </script>
 </body>
 </html>
