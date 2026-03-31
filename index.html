@@ -1,6 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  <!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-R9ZW02Q7MM"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-R9ZW02Q7MM');
+</script>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Silly — Coming Soon</title>
@@ -236,6 +245,19 @@
       box-shadow: 0 8px 0 rgba(0,0,0,0.08);
       margin-bottom: 18px;
     }
+    #success-message {
+  color: #0f172a;
+  background: #d1fae5;
+  border: 2px solid #0f172a;
+  border-radius: 12px;
+  padding: 10px;
+  animation: fadeIn 0.4s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(5px); }
+  to { opacity: 1; transform: translateY(0); }
+}
 
     .form-title {
       margin: 0 0 8px;
@@ -563,17 +585,28 @@
             <p class="form-title">Get first access</p>
             <p class="form-copy">Join the list for launch updates, early drops, and whatever goes live first.</p>
 
-            <form id="waitlist-form">
-              <label class="sr-only" for="email">Email address</label>
-              <div class="form-row">
-                <input id="email" name="email" type="email" placeholder="Enter your email" required />
-                <button class="btn primary" type="submit">Notify me</button>
-              </div>
-              <div class="micro">
-                This version opens your visitor’s email app and drafts a message to
-                <strong>hello@sillyperformance.com</strong>. When you’re ready, swap it to a real form service.
-              </div>
-            </form>
+            <form id="waitlist-form" action="https://formspree.io/f/mlgonagb" method="POST">
+  <div class="form-row">
+    <input 
+      id="email"
+      type="email" 
+      name="email" 
+      placeholder="Enter your email" 
+      required 
+    />
+    <button class="btn primary" type="submit">
+      Get early access
+    </button>
+  </div>
+
+  <input type="hidden" name="_subject" value="New Waitlist Signup" />
+
+  <!-- 👇 success message (hidden by default) -->
+  <p id="success-message" style="display:none; font-weight:900; margin-top:12px;">
+    You're in 🔥
+  </p>
+</form>
+<p class="micro">Join 100+ others waiting for the drop.</p>
           </div>
 
           <div class="cta-row">
@@ -621,20 +654,38 @@
 
 <script>
   const form = document.getElementById('waitlist-form');
-  form.addEventListener('submit', function (event) {
-    event.preventDefault();
-    const email = document.getElementById('email').value.trim();
-    if (!email) return;
+  const successMessage = document.getElementById('success-message');
 
-    const subject = encodeURIComponent('Launch updates request');
-    const body = encodeURIComponent(
-      'Please add me to the Silly launch list.\n\nEmail: ' + email
-    );
+  form.addEventListener('submit', async function (e) {
+    e.preventDefault();
 
-    window.location.href =
-      'mailto:hello@sillyperformance.com?subject=' + subject + '&body=' + body;
+    const formData = new FormData(form);
+
+    try {
+      const response = await fetch(form.action, {
+        method: "POST",
+        body: formData,
+        headers: {
+          'Accept': 'application/json'
+        }
+      });
+
+      if (response.ok) {
+  form.reset();
+  successMessage.style.display = 'block';
+
+  // 👇 TRACK SIGNUP EVENT
+  gtag('event', 'waitlist_signup', {
+    event_category: 'engagement',
+    event_label: 'email_signup'
   });
-
+} else {
+        alert("Something went wrong. Try again.");
+      }
+    } catch (error) {
+      alert("Network error. Try again.");
+    }
+  });
   const launchDate = new Date('2026-05-31T23:59:59');
 
   const countdown = document.getElementById('countdown');
