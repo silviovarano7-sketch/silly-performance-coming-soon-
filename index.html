@@ -187,6 +187,14 @@ body {
       font-weight: 800;
       font-size: 0.95rem;
     }
+    .card {
+  background: var(--paper);
+  border: 4px solid var(--ink);
+  border-radius: 34px;
+  box-shadow: 0 18px 0 var(--shadow);
+  overflow: hidden;
+  backdrop-filter: blur(8px);
+}
 
     .brandmark {
       display: inline-flex;
@@ -217,15 +225,6 @@ body {
       padding: 10px 14px;
       text-decoration: none;
       box-shadow: 0 4px 0 rgba(0,0,0,0.08);
-    }
-
-    .card {
-      background: var(--paper);
-      border: 4px solid var(--ink);
-      border-radius: 34px;
-      box-shadow: 0 18px 0 var(--shadow);
-      overflow: hidden;
-      backdrop-filter: blur(8px);
     }
 
     .hero {
@@ -263,12 +262,12 @@ body {
     }
 
     h1 {
-      margin: 0 0 16px;
-      font-size: clamp(3.2rem, 8vw, 6.4rem);
-      line-height: 0.92;
-      letter-spacing: -0.06em;
-      font-weight: 900;
-    }
+  margin: 0 0 14px;
+  font-size: clamp(2.1rem, 4.8vw, 4.0rem);
+  line-height: 1.06;
+  letter-spacing: -0.035em;
+  font-weight: 900;
+}
 
     .brand {
       display: inline-block;
@@ -469,28 +468,7 @@ body {
   border-bottom: 0;
   background: transparent;
   padding: 0;
-  min-height: 0;
 }
-
-    .stat {
-      padding: 18px 20px;
-      border-right: 4px solid var(--ink);
-    }
-
-    .stat:last-child { border-right: 0; }
-
-    .stat-num {
-      display: block;
-      font-size: 1.3rem;
-      font-weight: 900;
-      margin-bottom: 4px;
-    }
-
-    .stat-label {
-      font-size: 0.9rem;
-      font-weight: 800;
-      opacity: 0.82;
-    }
 
     .footer {
       padding: 20px 26px 24px;
@@ -535,19 +513,6 @@ body {
       .left {
         padding: 38px 26px 26px;
       }
-
-      .stats {
-        grid-template-columns: 1fr;
-      }
-
-      .stat {
-        border-right: 0;
-        border-bottom: 4px solid var(--ink);
-      }
-
-      .stat:last-child {
-        border-bottom: 0;
-      }
     }
 
     @media (max-width: 640px) {
@@ -572,6 +537,9 @@ body {
       .btn {
         width: 100%;
       }
+      .sub {
+  line-height: 1.4;
+}
 
       .sticker, .sticker2 {
         font-size: 0.8rem;
@@ -598,15 +566,14 @@ body {
       <section class="hero">
         <div class="left">
           <div class="eyebrow">Launching soon</div>
-          <h1><span class="brand">Silly</span><br />is on the way.</h1>
+          <h1>Built for strength. Designed for transformation.</h1>
           <p class="sub">
-            A powerful new era of strength, discipline, and transformation is coming soon.
-            We’re building a fitness program that’s bold, focused, and impossible to ignore.
-
-          </p>
+  You’re going to look Silly soon.<br>
+  Strength. Discipline. Real results.
+</p>
           <div class="countdown" aria-label="Launch countdown">
   <p class="countdown-title">Countdown to launch</p>
-  <p class="countdown-copy">We’re counting down to the next big drop.</p>
+  <p class="countdown-copy">We’re counting down to the program launch.</p>
 
   <div class="countdown-grid" id="countdown">
     <div class="countdown-item">
@@ -626,12 +593,12 @@ body {
       <span class="countdown-label">Seconds</span>
     </div>
   </div>
-      <p class="urgency">Limited early access — don’t miss the drop.</p>
+      <p class="urgency">Limited early access — don’t miss the launch.</p>
 </div>
 
           <div class="form-card">
             <p class="form-title">Get first access</p>
-            <p class="form-copy">Join the list for launch updates, early drops, and whatever goes live first.</p>
+            <p class="form-copy">Join the list for launch updates and early access.</p>
 
             <form id="waitlist-form" action="https://formspree.io/f/mlgonagb" method="POST">
   <div class="form-row">
@@ -654,7 +621,7 @@ body {
     You're in 🔥
   </p>
 </form>
-<p class="micro">Join 100+ others waiting for the drop.</p>
+<p class="micro">Join 100+ others getting early access.</p>
           </div>
 
           <div class="cta-row">
@@ -701,7 +668,7 @@ body {
       <footer class="footer">
         <div>© 2026 Silly</div>
         <div class="footer-note">
-          Early access is open. First drop coming soon.
+          Early access is open. First program launching soon.
         </div>
       </footer>
     </main>
