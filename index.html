@@ -464,12 +464,13 @@ body {
     }
 
     .stats {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      border-top: 4px solid var(--ink);
-      border-bottom: 4px solid var(--ink);
-      background: rgba(255,255,255,0.3);
-    }
+  display: block;
+  border-top: 4px solid var(--ink);
+  border-bottom: 0;
+  background: transparent;
+  padding: 0;
+  min-height: 0;
+}
 
     .stat {
       padding: 18px 20px;
