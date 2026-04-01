@@ -29,7 +29,7 @@
   .stats {
   display: block;
   border-top: 4px solid var(--ink);
-  border-bottom: 0;
+  border-bottom: none;
   background: rgba(255,255,255,0.22);
 }
 
@@ -471,6 +471,7 @@ body {
 }
 
     .footer {
+      border-top: 4px solid var(--ink);
       padding: 20px 26px 24px;
       display: flex;
       align-items: center;
@@ -642,26 +643,30 @@ body {
         </div>
       </section>
 
-      <section class="stats" aria-label="Launch highlights">
-        <div class="mobile-signup">
-  <p class="mobile-signup-title">Don’t miss the drop</p>
-  <p class="mobile-signup-copy">Join the waitlist for early access.</p>
+      <section class="stats">
+  <div class="mobile-signup">
+    
+    <div class="form-card"> <!-- 👈 ADD THIS WRAPPER -->
 
-  <form id="waitlist-form-mobile" action="https://formspree.io/f/mlgonagb" method="POST">
-    <div class="form-row">
-      <input
-        type="email"
-        name="email"
-        placeholder="Enter your email"
-        required
-      />
-      <button class="btn primary" type="submit">Get early access</button>
-    </div>
+      <p class="mobile-signup-title">Don’t miss the launch</p>
+      <p class="mobile-signup-copy">Join the waitlist for early access.</p>
 
-    <input type="hidden" name="_subject" value="New Waitlist Signup" />
-    <p class="micro">Join 100+ others waiting for the drop.</p>
-    <p class="mobile-success" style="display:none;">You're in 🔥</p>
-  </form>
+      <form id="waitlist-form-mobile" action="https://formspree.io/f/mlgonagb" method="POST">
+        <div class="form-row">
+          <input type="email" name="email" placeholder="Enter your email" required />
+          <button class="btn primary" type="submit">Get early access</button>
+        </div>
+
+        <input type="hidden" name="_subject" value="New Waitlist Signup" />
+
+        <p class="micro">Join 100+ others getting early access.</p>
+        <p class="mobile-success">You're in 🔥</p>
+      </form>
+
+    </div> <!-- 👈 END WRAPPER -->
+
+  </div>
+</section>
 </div>
       </section>
 
